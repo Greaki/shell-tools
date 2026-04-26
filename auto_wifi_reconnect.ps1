@@ -1,10 +1,13 @@
-# 重连WIFI
 $wifiName = "1-904_5G"
 
-$pingTarget = "8.8.8.8"
-
 while ($true) {
-    $online = Test-Connection -ComputerName $pingTarget -Count 1 -Quiet
+    $online = $false
+
+    try {
+        $online = Test-NetConnection -ComputerName "www.baidu.com" -Port 443 -InformationLevel Quiet
+    } catch {
+        $online = $false
+    }
 
     if ($online) {
         Write-Host "$(Get-Date) - connected"
